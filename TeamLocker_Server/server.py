@@ -1,3 +1,5 @@
+import models
+import config
 from flask import Flask, abort, request
 
 app = Flask(__name__)
@@ -19,4 +21,6 @@ def ping():
     return "Foo"
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=4048, debug=True)
+    models.init(config.connection_string)
+
+    # app.run(host="127.0.0.1", port=4048, debug=True)
