@@ -78,6 +78,5 @@ def command_add_user():
     auth_key_hash = crypto.generate_auth_key_hash(crypto.generate_auth_key(username, password))
 
 
-
 if __name__ == "__main__":
     main()

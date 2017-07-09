@@ -23,7 +23,6 @@ class User(Base):
     username = Column(String)
     auth_key_hash = Column(String)
     encrypted_private_key = Column(Binary)
-    encrypted_private_key_nonce = Column(Binary)
     public_key = Column(Binary)
     encrypted_account_data_items = relationship("EncryptedAccountDataItem", back_populates="user")
     permissions = relationship("Permission", back_populates="user")

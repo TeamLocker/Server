@@ -1,5 +1,6 @@
 import pysodium
 import binascii
+from protobufs.Libsodium_pb2 import LibsodiumItem
 
 
 def generate_auth_key(username, password):
@@ -12,17 +13,35 @@ def generate_auth_key(username, password):
     MEMLIMIT = pysodium.crypto_pwhash_scryptsalsa208sha256_MEMLIMIT_INTERACTIVE
 
     auth_key = pysodium.crypto_pwhash_scryptsalsa208sha256(64, password.encode("UTF-8"), salt, OPSLIMIT, MEMLIMIT)
-    return binascii.hexlify(auth_key).decode("UTF-8")
+
+    packed_auth_key = LibsodiumItem()
+    packed_auth_key.data = auth_key
+    packed_auth_key.ops_limit = OPSLIMIT
+    packed_auth_key.mem_limit = MEMLIMIT
+
+    return packed_auth_key.SerializeToString()
 
 
-def generate_auth_key_hash(auth_key):
-    OPSLIMIT = pysodium.crypto_pwhash_scryptsalsa208sha256_OPSLIMIT_INTERACTIVE
-    MEMLIMIT = pysodium.crypto_pwhash_scryptsalsa208sha256_MEMLIMIT_INTERACTIVE
+def generate_auth_key_hash(packed_auth_key):
+    auth_key = unpack_libsodium_item(packed_auth_key)
 
-    auth_key_hash = pysodium.crypto_pwhash_scryptsalsa208sha256_str(auth_key, OPSLIMIT, MEMLIMIT)
+    auth_key_hash = pysodium.crypto_pwhash_scryptsalsa208sha256_str(auth_key.data, auth_key.ops_limit,
+                                                                    auth_key.mem_limit)
 
-    return auth_key_hash
+    packed_auth_key_hash = LibsodiumItem()
+    packed_auth_key_hash.data = auth_key_hash
+    packed_auth_key_hash.ops_limit = auth_key.ops_limit
+    packed_auth_key_hash.mem_limit = auth_key.mem_limit
+
+    return packed_auth_key_hash.SerializeToString()
 
 
 def verify_auth_key(stored_auth_key_hash, supplied_auth_key):
-    return pysodium.crypto_pwhash_scryptsalsa208sha256_str_verify(stored_auth_key_hash, supplied_auth_key)
+    return pysodium.crypto_pwhash_scryptsalsa208sha256_str_verify(unpack_libsodium_item(stored_auth_key_hash).data,
+                                                                  unpack_libsodium_item(supplied_auth_key).data)
+
+
+def unpack_libsodium_item(packed_libsodium_item):
+    obj = LibsodiumItem()
+    obj.ParseFromString(packed_libsodium_item)
+    return obj

@@ -6,6 +6,7 @@ itsdangerous==0.24
 Jinja2==2.9.6
 MarkupSafe==1.0
 packaging==16.8
+protobuf==3.3.0
 psycopg2==2.7.1
 pycparser==2.18
 pyparsing==2.2.0
