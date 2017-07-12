@@ -58,8 +58,7 @@ def command_add_user():
     print("You are about to add a user using the server control utility. Adding users in this way is not recommended "
           "as the user's raw password will be temporarily handled by the server. The recommended way to add users is "
           "through the desktop client. This method should only be used when there are no administrator users available "
-          "in order to use the desktop client. It is therefore strongly recommended that the user changes their "
-          "password after logging into an account that was created using this utility.\n")
+          "in order to use the desktop client.\n")
     read_input_yn("Are you sure you want to continue? (y/n): ")
 
     full_name = read_input_nonempty("Full Name: ")
@@ -76,6 +75,13 @@ def command_add_user():
 
     print("Creating user...")
     auth_key_hash = crypto.generate_auth_key_hash(crypto.generate_auth_key(username, password))
+
+    public_key, private_key = crypto.generate_keypair()
+    key, kdf_salt = crypto.derive_key(password)
+    encrypted_private_key = crypto.shared_key_encrypt(private_key, key)
+
+    print(private_key)
+    print(crypto.shared_key_decrypt(encrypted_private_key, crypto.derive_key_with_salt(password, kdf_salt)))
 
 
 if __name__ == "__main__":

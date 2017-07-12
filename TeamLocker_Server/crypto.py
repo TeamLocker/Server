@@ -12,6 +12,7 @@ def generate_auth_key(username, password):
     OPSLIMIT = pysodium.crypto_pwhash_scryptsalsa208sha256_OPSLIMIT_INTERACTIVE
     MEMLIMIT = pysodium.crypto_pwhash_scryptsalsa208sha256_MEMLIMIT_INTERACTIVE
 
+    # TODO: Magic number 64?
     auth_key = pysodium.crypto_pwhash_scryptsalsa208sha256(64, password.encode("UTF-8"), salt, OPSLIMIT, MEMLIMIT)
 
     packed_auth_key = LibsodiumItem()
@@ -27,6 +28,17 @@ def generate_auth_key_hash(packed_auth_key):
 
     auth_key_hash = pysodium.crypto_pwhash_scryptsalsa208sha256_str(auth_key.data, auth_key.ops_limit,
                                                                     auth_key.mem_limit)
+    auth_key = unpack_libsodium_item(packed_auth_key)
+
+    auth_key_hash = pysodium.crypto_pwhash_scryptsalsa208sha256_str(auth_key.data, auth_key.ops_limit,
+                                                                    auth_key.mem_limit)
+
+    packed_auth_key_hash = LibsodiumItem()
+    packed_auth_key_hash.data = auth_key_hash
+    packed_auth_key_hash.ops_limit = auth_key.ops_limit
+    packed_auth_key_hash.mem_limit = auth_key.mem_limit
+
+    return packed_auth_key_hash.SerializeToString()
 
     packed_auth_key_hash = LibsodiumItem()
     packed_auth_key_hash.data = auth_key_hash
@@ -39,6 +51,47 @@ def generate_auth_key_hash(packed_auth_key):
 def verify_auth_key(stored_auth_key_hash, supplied_auth_key):
     return pysodium.crypto_pwhash_scryptsalsa208sha256_str_verify(unpack_libsodium_item(stored_auth_key_hash).data,
                                                                   unpack_libsodium_item(supplied_auth_key).data)
+
+
+def generate_keypair():
+    return pysodium.crypto_box_keypair()
+
+
+def derive_key(password):
+    salt = pysodium.randombytes(pysodium.crypto_pwhash_scryptsalsa208sha256_SALTBYTES)
+    key = derive_key_with_salt(password, salt)
+    return key, salt
+
+
+def derive_key_with_salt(password, salt):
+    OPSLIMIT = pysodium.crypto_pwhash_scryptsalsa208sha256_OPSLIMIT_INTERACTIVE
+    MEMLIMIT = pysodium.crypto_pwhash_scryptsalsa208sha256_MEMLIMIT_INTERACTIVE
+
+    # TODO: Magic number 64?
+    key = pysodium.crypto_pwhash_scryptsalsa208sha256(64, password, salt, OPSLIMIT, MEMLIMIT)
+    return key
+
+
+def shared_key_encrypt(data, key):
+    nonce = pysodium.randombytes(pysodium.crypto_secretbox_NONCEBYTES)
+
+    cyphertext = pysodium.crypto_secretbox(data, nonce, key)
+
+    packed_cyphertext = LibsodiumItem()
+    packed_cyphertext.data = cyphertext
+    packed_cyphertext.nonce = nonce
+
+    return packed_cyphertext.SerializeToString()
+
+
+def shared_key_decrypt(packed_cyphertext, key):
+    obj = unpack_libsodium_item(packed_cyphertext)
+    nonce = obj.nonce
+    cyphertext = obj.data
+
+    result = pysodium.crypto_secretbox_open(cyphertext, nonce, key)
+
+    return result
 
 
 def unpack_libsodium_item(packed_libsodium_item):
