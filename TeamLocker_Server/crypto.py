@@ -1,5 +1,6 @@
 import pysodium
 import binascii
+import base64
 from protobufs.Libsodium_pb2 import LibsodiumItem
 
 
@@ -28,29 +29,16 @@ def generate_auth_key_hash(packed_auth_key):
 
     auth_key_hash = pysodium.crypto_pwhash_scryptsalsa208sha256_str(auth_key.data, auth_key.ops_limit,
                                                                     auth_key.mem_limit)
-    auth_key = unpack_libsodium_item(packed_auth_key)
 
-    auth_key_hash = pysodium.crypto_pwhash_scryptsalsa208sha256_str(auth_key.data, auth_key.ops_limit,
-                                                                    auth_key.mem_limit)
-
-    packed_auth_key_hash = LibsodiumItem()
-    packed_auth_key_hash.data = auth_key_hash
-    packed_auth_key_hash.ops_limit = auth_key.ops_limit
-    packed_auth_key_hash.mem_limit = auth_key.mem_limit
-
-    return packed_auth_key_hash.SerializeToString()
-
-    packed_auth_key_hash = LibsodiumItem()
-    packed_auth_key_hash.data = auth_key_hash
-    packed_auth_key_hash.ops_limit = auth_key.ops_limit
-    packed_auth_key_hash.mem_limit = auth_key.mem_limit
-
-    return packed_auth_key_hash.SerializeToString()
+    return auth_key_hash
 
 
 def verify_auth_key(stored_auth_key_hash, supplied_auth_key):
-    return pysodium.crypto_pwhash_scryptsalsa208sha256_str_verify(unpack_libsodium_item(stored_auth_key_hash).data,
-                                                                  unpack_libsodium_item(supplied_auth_key).data)
+    try:
+        pysodium.crypto_pwhash_scryptsalsa208sha256_str_verify(stored_auth_key_hash, supplied_auth_key)
+        return True
+    except ValueError:
+        return False
 
 
 def generate_keypair():

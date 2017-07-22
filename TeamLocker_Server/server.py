@@ -1,5 +1,8 @@
+import base64
+
 import models
 import config
+import crypto
 from flask import Flask, abort, request
 
 app = Flask(__name__)
@@ -7,12 +10,19 @@ app = Flask(__name__)
 
 @app.before_request
 def check_auth():
-    username = "test"
-    auth_key = ("d556e5819973e8f850507b2fc93c28878dfecbb4dbe064be6535a037c29c933d8bceaff233488e9bcc533e1660dce29878ab08"
-                "54cb8b645fb9bd6e4008e85fee")
+    if not request.authorization:
+        abort(401)
 
-    if not (request.authorization and request.authorization.username == username and
-            request.authorization.password == auth_key):
+    user = models.User.query.filter(models.User.username == request.authorization.username).first()
+
+    if not user:
+        # TODO: Hash something here to prevent timing attacks?
+        abort(401)
+
+    packed_auth_key = base64.b64decode(request.authorization.password)
+    auth_key = crypto.unpack_libsodium_item(packed_auth_key).data
+
+    if not crypto.verify_auth_key(user.auth_key_hash, auth_key):
         abort(401)
 
 
@@ -23,4 +33,4 @@ def ping():
 if __name__ == "__main__":
     models.init(config.connection_string)
 
-    # app.run(host="127.0.0.1", port=4048, debug=True)
+    app.run(host="127.0.0.1", port=4048, debug=True)

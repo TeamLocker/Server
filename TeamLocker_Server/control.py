@@ -1,8 +1,9 @@
 import sys
-import models
 import config
 import crypto
+import models
 from getpass import getpass
+
 
 def main():
     global commands
@@ -34,7 +35,7 @@ def read_input_yn(message):
     value = ""
     while value not in ["y", "n"]:
         value = input(message).lower()
-    return value
+    return value == "y"
 
 
 def read_input_nonempty(message, password=False):
@@ -80,8 +81,19 @@ def command_add_user():
     key, kdf_salt = crypto.derive_key(password)
     encrypted_private_key = crypto.shared_key_encrypt(private_key, key)
 
-    print(private_key)
-    print(crypto.shared_key_decrypt(encrypted_private_key, crypto.derive_key_with_salt(password, kdf_salt)))
+    init_db()
+
+    user = models.User()
+    user.username = username
+    user.full_name = full_name
+    user.auth_key_hash = auth_key_hash
+    user.encrypted_private_key = encrypted_private_key
+    user.public_key = public_key
+    user.kdf_salt = kdf_salt
+    user.is_admin = is_admin
+
+    models.db_session.add(user)
+    models.db_session.commit()
 
 
 if __name__ == "__main__":

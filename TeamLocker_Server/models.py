@@ -21,10 +21,12 @@ class User(Base):
 
     id = Column(Integer, primary_key=True)
     username = Column(String)
-    auth_key_hash = Column(String)
+    full_name = Column(String)
+    auth_key_hash = Column(Binary)
     encrypted_private_key = Column(Binary)
     public_key = Column(Binary)
     kdf_salt = Column(Binary)
+    is_admin = Column(Boolean)
     encrypted_account_data_items = relationship("EncryptedAccountDataItem", back_populates="user")
     permissions = relationship("Permission", back_populates="user")
 
