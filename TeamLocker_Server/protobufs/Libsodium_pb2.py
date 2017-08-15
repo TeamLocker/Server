@@ -21,6 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_pb=_b('\n\x19protobufs/Libsodium.proto\"R\n\rLibsodiumItem\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\x12\r\n\x05nonce\x18\x02 \x01(\x0c\x12\x11\n\tops_limit\x18\x03 \x01(\x03\x12\x11\n\tmem_limit\x18\x04 \x01(\x03\x42,\n*me.camerongray.teamlocker.client.protobufsb\x06proto3')
 )
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -77,7 +78,6 @@ _LIBSODIUMITEM = _descriptor.Descriptor(
 )
 
 DESCRIPTOR.message_types_by_name['LibsodiumItem'] = _LIBSODIUMITEM
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 LibsodiumItem = _reflection.GeneratedProtocolMessageType('LibsodiumItem', (_message.Message,), dict(
   DESCRIPTOR = _LIBSODIUMITEM,

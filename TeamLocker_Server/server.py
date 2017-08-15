@@ -4,8 +4,12 @@ import models
 import config
 import crypto
 from flask import Flask, abort, request
+
+import validation
 from protobufs.GetUser_pb2 import GetUserResponse
 from protobufs.MessageComponents_pb2 import OperationResult
+from protobufs.Libsodium_pb2 import LibsodiumItem
+from protobufs.AddUser_pb2 import *
 
 app = Flask(__name__)
 
@@ -48,11 +52,57 @@ def get_users(user_id):
     response.user.id = user.id
     response.user.username = user.username
     response.user.full_name = user.full_name
-    response.user.auth_key_hash = user.auth_key_hash
-    response.user.encrypted_private_key = user.encrypted_private_key
+    response.user.encrypted_private_key.ParseFromString(user.encrypted_private_key)
     response.user.public_key = user.public_key
     response.user.kdf_salt = user.kdf_salt
     response.user.is_admin = user.is_admin
+
+    print(response.user.encrypted_private_key.data)
+
+    return response.SerializeToString()
+
+
+# TODO: Ensure username uniqueness checking works!
+@app.route("/users/", methods=["PUT"])
+def put_user():
+    if not request.authenticated_user.is_admin:
+        abort(401)
+
+    body = AddUserRequest()
+    body.ParseFromString(request.data)
+
+    try:
+        validation.validate_username(body.user.username)
+        validation.validate_nonempty("Full Name", body.user.full_name)
+    except validation.ValidationException as ex:
+        response = AddUserResponse()
+        response.result.success = False
+        response.result.message = str(ex)
+        return response.SerializeToString(), 400
+
+    user = models.User()
+    user.username = body.user.username
+    user.full_name = body.user.full_name
+    user.is_admin = body.user.is_admin
+    user.kdf_salt = body.user.kdf_salt
+    user.encrypted_private_key = body.user.encrypted_private_key.SerializeToString()
+    user.public_key = body.user.public_key
+    user.auth_key_hash = crypto.generate_auth_key_hash(body.user.auth_key)
+
+    models.db_session.add(user)
+    models.db_session.commit()
+
+    response = AddUserResponse()
+    response.result.success = True
+    response.user.username = user.username
+    response.user.full_name = user.full_name
+    response.user.is_admin = user.is_admin
+    response.user.kdf_salt = user.kdf_salt
+    response.user.encrypted_private_key.data = body.user.encrypted_private_key.data
+    response.user.encrypted_private_key.ops_limit = body.user.encrypted_private_key.ops_limit
+    response.user.encrypted_private_key.mem_limit = body.user.encrypted_private_key.mem_limit
+    response.user.public_key = user.public_key
+    response.user.auth_key_hash = user.auth_key_hash
 
     return response.SerializeToString()
 

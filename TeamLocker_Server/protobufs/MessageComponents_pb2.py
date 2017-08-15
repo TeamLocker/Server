@@ -21,6 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_pb=_b('\n!protobufs/MessageComponents.proto\"3\n\x0fOperationResult\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\tB,\n*me.camerongray.teamlocker.client.protobufsb\x06proto3')
 )
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -63,7 +64,6 @@ _OPERATIONRESULT = _descriptor.Descriptor(
 )
 
 DESCRIPTOR.message_types_by_name['OperationResult'] = _OPERATIONRESULT
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 OperationResult = _reflection.GeneratedProtocolMessageType('OperationResult', (_message.Message,), dict(
   DESCRIPTOR = _OPERATIONRESULT,

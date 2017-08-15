@@ -20,7 +20,7 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
-    username = Column(String)
+    username = Column(String, unique=True)
     full_name = Column(String)
     auth_key_hash = Column(Binary)
     encrypted_private_key = Column(Binary)
@@ -71,6 +71,6 @@ class Folder(Base):
     __tablename__ = "folders"
 
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    name = Column(String, unique=True)
     accounts = relationship("Account", back_populates="folder")
     permissions = relationship("Permission", back_populates="folder")

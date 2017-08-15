@@ -24,6 +24,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   serialized_pb=_b('\n\x17protobufs/AddUser.proto\x1a!protobufs/MessageComponents.proto\x1a\x17protobufs/Objects.proto\"%\n\x0e\x41\x64\x64UserRequest\x12\x13\n\x04user\x18\x01 \x01(\x0b\x32\x05.User\"H\n\x0f\x41\x64\x64UserResponse\x12 \n\x06result\x18\x01 \x01(\x0b\x32\x10.OperationResult\x12\x13\n\x04user\x18\x02 \x01(\x0b\x32\x05.UserB,\n*me.camerongray.teamlocker.client.protobufsb\x06proto3')
   ,
   dependencies=[protobufs_dot_MessageComponents__pb2.DESCRIPTOR,protobufs_dot_Objects__pb2.DESCRIPTOR,])
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -101,7 +102,6 @@ _ADDUSERRESPONSE.fields_by_name['result'].message_type = protobufs_dot_MessageCo
 _ADDUSERRESPONSE.fields_by_name['user'].message_type = protobufs_dot_Objects__pb2._USER
 DESCRIPTOR.message_types_by_name['AddUserRequest'] = _ADDUSERREQUEST
 DESCRIPTOR.message_types_by_name['AddUserResponse'] = _ADDUSERRESPONSE
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 AddUserRequest = _reflection.GeneratedProtocolMessageType('AddUserRequest', (_message.Message,), dict(
   DESCRIPTOR = _ADDUSERREQUEST,

@@ -13,14 +13,17 @@ from google.protobuf import descriptor_pb2
 _sym_db = _symbol_database.Default()
 
 
+from protobufs import Libsodium_pb2 as protobufs_dot_Libsodium__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='protobufs/Objects.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x17protobufs/Objects.proto\"\xa5\x01\n\x04User\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x11\n\tfull_name\x18\x03 \x01(\t\x12\x15\n\rauth_key_hash\x18\x04 \x01(\x0c\x12\x1d\n\x15\x65ncrypted_private_key\x18\x05 \x01(\x0c\x12\x12\n\npublic_key\x18\x06 \x01(\x0c\x12\x10\n\x08kdf_salt\x18\x07 \x01(\x0c\x12\x10\n\x08is_admin\x18\x08 \x01(\x08\x42,\n*me.camerongray.teamlocker.client.protobufsb\x06proto3')
-)
+  serialized_pb=_b('\n\x17protobufs/Objects.proto\x1a\x19protobufs/Libsodium.proto\"\xc7\x01\n\x04User\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x11\n\tfull_name\x18\x03 \x01(\t\x12\x10\n\x08\x61uth_key\x18\x04 \x01(\x0c\x12\x15\n\rauth_key_hash\x18\x05 \x01(\x0c\x12-\n\x15\x65ncrypted_private_key\x18\x06 \x01(\x0b\x32\x0e.LibsodiumItem\x12\x12\n\npublic_key\x18\x07 \x01(\x0c\x12\x10\n\x08kdf_salt\x18\x08 \x01(\x0c\x12\x10\n\x08is_admin\x18\t \x01(\x08\x42,\n*me.camerongray.teamlocker.client.protobufsb\x06proto3')
+  ,
+  dependencies=[protobufs_dot_Libsodium__pb2.DESCRIPTOR,])
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -54,36 +57,43 @@ _USER = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='auth_key_hash', full_name='User.auth_key_hash', index=3,
+      name='auth_key', full_name='User.auth_key', index=3,
       number=4, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=_b(""),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='encrypted_private_key', full_name='User.encrypted_private_key', index=4,
+      name='auth_key_hash', full_name='User.auth_key_hash', index=4,
       number=5, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=_b(""),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='public_key', full_name='User.public_key', index=5,
-      number=6, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b(""),
+      name='encrypted_private_key', full_name='User.encrypted_private_key', index=5,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='kdf_salt', full_name='User.kdf_salt', index=6,
+      name='public_key', full_name='User.public_key', index=6,
       number=7, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=_b(""),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='is_admin', full_name='User.is_admin', index=7,
-      number=8, type=8, cpp_type=7, label=1,
+      name='kdf_salt', full_name='User.kdf_salt', index=7,
+      number=8, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='is_admin', full_name='User.is_admin', index=8,
+      number=9, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -100,12 +110,12 @@ _USER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=28,
-  serialized_end=193,
+  serialized_start=55,
+  serialized_end=254,
 )
 
+_USER.fields_by_name['encrypted_private_key'].message_type = protobufs_dot_Libsodium__pb2._LIBSODIUMITEM
 DESCRIPTOR.message_types_by_name['User'] = _USER
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 User = _reflection.GeneratedProtocolMessageType('User', (_message.Message,), dict(
   DESCRIPTOR = _USER,
