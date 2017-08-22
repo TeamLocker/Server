@@ -64,7 +64,7 @@ def get_users(user_id):
 @app.route("/users/", methods=["PUT"])
 def put_user():
     if not request.authenticated_user.is_admin:
-        abort(401)
+        return validation.get_not_admin_response(AddUserResponse)
 
     body = AddUserRequest()
     body.ParseFromString(request.data)
