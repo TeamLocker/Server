@@ -57,8 +57,6 @@ def get_users(user_id):
     response.user.kdf_salt = user.kdf_salt
     response.user.is_admin = user.is_admin
 
-    print(response.user.encrypted_private_key.data)
-
     return response.SerializeToString()
 
 
