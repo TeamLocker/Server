@@ -20,10 +20,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='protobufs/Objects.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x17protobufs/Objects.proto\x1a\x19protobufs/Libsodium.proto\"\xc7\x01\n\x04User\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x11\n\tfull_name\x18\x03 \x01(\t\x12\x10\n\x08\x61uth_key\x18\x04 \x01(\x0c\x12\x15\n\rauth_key_hash\x18\x05 \x01(\x0c\x12-\n\x15\x65ncrypted_private_key\x18\x06 \x01(\x0b\x32\x0e.LibsodiumItem\x12\x12\n\npublic_key\x18\x07 \x01(\x0c\x12\x10\n\x08kdf_salt\x18\x08 \x01(\x0c\x12\x10\n\x08is_admin\x18\t \x01(\x08\x42,\n*me.camerongray.teamlocker.client.protobufsb\x06proto3')
+  serialized_pb=_b('\n\x17protobufs/Objects.proto\x1a\x19protobufs/Libsodium.proto\"\xc7\x01\n\x04User\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x11\n\tfull_name\x18\x03 \x01(\t\x12\x10\n\x08\x61uth_key\x18\x04 \x01(\x0c\x12\x15\n\rauth_key_hash\x18\x05 \x01(\x0c\x12-\n\x15\x65ncrypted_private_key\x18\x06 \x01(\x0b\x32\x0e.LibsodiumItem\x12\x12\n\npublic_key\x18\x07 \x01(\x0c\x12\x10\n\x08kdf_salt\x18\x08 \x01(\x0c\x12\x10\n\x08is_admin\x18\t \x01(\x08\"\"\n\x06\x46older\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\tB,\n*me.camerongray.teamlocker.client.protobufsb\x06proto3')
   ,
   dependencies=[protobufs_dot_Libsodium__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -114,8 +113,48 @@ _USER = _descriptor.Descriptor(
   serialized_end=254,
 )
 
+
+_FOLDER = _descriptor.Descriptor(
+  name='Folder',
+  full_name='Folder',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='Folder.id', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='name', full_name='Folder.name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=256,
+  serialized_end=290,
+)
+
 _USER.fields_by_name['encrypted_private_key'].message_type = protobufs_dot_Libsodium__pb2._LIBSODIUMITEM
 DESCRIPTOR.message_types_by_name['User'] = _USER
+DESCRIPTOR.message_types_by_name['Folder'] = _FOLDER
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 User = _reflection.GeneratedProtocolMessageType('User', (_message.Message,), dict(
   DESCRIPTOR = _USER,
@@ -123,6 +162,13 @@ User = _reflection.GeneratedProtocolMessageType('User', (_message.Message,), dic
   # @@protoc_insertion_point(class_scope:User)
   ))
 _sym_db.RegisterMessage(User)
+
+Folder = _reflection.GeneratedProtocolMessageType('Folder', (_message.Message,), dict(
+  DESCRIPTOR = _FOLDER,
+  __module__ = 'protobufs.Objects_pb2'
+  # @@protoc_insertion_point(class_scope:Folder)
+  ))
+_sym_db.RegisterMessage(Folder)
 
 
 DESCRIPTOR.has_options = True

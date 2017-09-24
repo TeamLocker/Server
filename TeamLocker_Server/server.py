@@ -6,6 +6,7 @@ import crypto
 from flask import Flask, abort, request
 
 import validation
+from protobufs.AddFolder_pb2 import AddFolderRequest, AddFolderResponse
 from protobufs.GetUser_pb2 import GetUserResponse
 from protobufs.MessageComponents_pb2 import OperationResult
 from protobufs.Libsodium_pb2 import LibsodiumItem
@@ -92,6 +93,7 @@ def put_user():
 
     response = AddUserResponse()
     response.result.success = True
+    response.user.id = user.id
     response.user.username = user.username
     response.user.full_name = user.full_name
     response.user.is_admin = user.is_admin
@@ -101,6 +103,33 @@ def put_user():
     response.user.encrypted_private_key.mem_limit = body.user.encrypted_private_key.mem_limit
     response.user.public_key = user.public_key
     response.user.auth_key_hash = user.auth_key_hash
+
+    return response.SerializeToString()
+
+
+@app.route("/folders/", methods=["PUT"])
+def put_folder():
+    body = AddFolderRequest()
+    body.ParseFromString(request.data)
+
+    try:
+        validation.validate_nonempty("Folder Name", body.folder.name)
+    except validation.ValidationException as ex:
+        response = AddFolderResponse()
+        response.result.success = False
+        response.result.message = str(ex)
+        return response.SerializeToString(), 400
+
+    folder = models.Folder()
+    folder.name = body.folder.name
+
+    models.db_session.add(folder)
+    models.db_session.commit()
+
+    response = AddFolderResponse()
+    response.result.success = True
+    response.folder.id = folder.id
+    response.folder.name = folder.name
 
     return response.SerializeToString()
 

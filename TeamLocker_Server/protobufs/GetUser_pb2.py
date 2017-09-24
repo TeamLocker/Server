@@ -24,7 +24,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   serialized_pb=_b('\n\x17protobufs/GetUser.proto\x1a!protobufs/MessageComponents.proto\x1a\x17protobufs/Objects.proto\"H\n\x0fGetUserResponse\x12 \n\x06result\x18\x01 \x01(\x0b\x32\x10.OperationResult\x12\x13\n\x04user\x18\x02 \x01(\x0b\x32\x05.UserB,\n*me.camerongray.teamlocker.client.protobufsb\x06proto3')
   ,
   dependencies=[protobufs_dot_MessageComponents__pb2.DESCRIPTOR,protobufs_dot_Objects__pb2.DESCRIPTOR,])
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
@@ -69,6 +68,7 @@ _GETUSERRESPONSE = _descriptor.Descriptor(
 _GETUSERRESPONSE.fields_by_name['result'].message_type = protobufs_dot_MessageComponents__pb2._OPERATIONRESULT
 _GETUSERRESPONSE.fields_by_name['user'].message_type = protobufs_dot_Objects__pb2._USER
 DESCRIPTOR.message_types_by_name['GetUserResponse'] = _GETUSERRESPONSE
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 GetUserResponse = _reflection.GeneratedProtocolMessageType('GetUserResponse', (_message.Message,), dict(
   DESCRIPTOR = _GETUSERRESPONSE,
