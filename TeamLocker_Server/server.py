@@ -11,6 +11,7 @@ from protobufs.GetUser_pb2 import GetUserResponse
 from protobufs.MessageComponents_pb2 import OperationResult
 from protobufs.Libsodium_pb2 import LibsodiumItem
 from protobufs.AddUser_pb2 import *
+from protobufs.GetFolder_pb2 import *
 
 app = Flask(__name__)
 
@@ -130,6 +131,19 @@ def put_folder():
     response.result.success = True
     response.folder.id = folder.id
     response.folder.name = folder.name
+
+    return response.SerializeToString()
+
+
+# TODO: This method neeeds to be updated to only get folders the user has permission for, this is just for testing!
+@app.route("/folders/", methods=["GET"])
+def get_folders():
+    folders = models.Folder.query.all()
+
+    response = GetFolderResponse()
+    response.result.success = True
+    for folder in folders:
+        response.folders.add(name=folder.name)
 
     return response.SerializeToString()
 
