@@ -39,6 +39,7 @@ class Permission(Base):
     folder_id = Column(Integer, ForeignKey("folders.id"))
     read = Column(Boolean)
     write = Column(Boolean)
+    manage = Column(Boolean)
     folder = relationship("Folder", back_populates="permissions")
     user = relationship("User", back_populates="permissions")
     encrypted_account_data_items = relationship("EncryptedAccountDataItem", back_populates="permission")

@@ -125,6 +125,16 @@ def put_folder():
     folder.name = body.folder.name
 
     models.db_session.add(folder)
+    models.db_session.flush()  # Flush session so we generate an ID for use when creating the permission
+
+    permission = models.Permission()
+    permission.folder_id = folder.id
+    permission.user_id = request.authenticated_user.id
+    permission.read = True
+    permission.write = True
+    permission.manage = True
+
+    models.db_session.add(permission)
     models.db_session.commit()
 
     response = AddFolderResponse()
@@ -135,15 +145,14 @@ def put_folder():
     return response.SerializeToString()
 
 
-# TODO: This method neeeds to be updated to only get folders the user has permission for, this is just for testing!
 @app.route("/folders/", methods=["GET"])
 def get_folders():
-    folders = models.Folder.query.all()
+    permissions = models.Permission.query.filter_by(user_id=request.authenticated_user.id, read=True)
 
     response = GetFolderResponse()
     response.result.success = True
-    for folder in folders:
-        response.folders.add(name=folder.name)
+    for permission in permissions:
+        response.folders.add(name=permission.folder.name)
 
     return response.SerializeToString()
 
