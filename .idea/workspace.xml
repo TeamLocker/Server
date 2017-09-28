@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6d6ee086-8f99-4083-8346-581b3f549121" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TeamLocker_Server/protobufs/Objects_pb2.py" afterPath="$PROJECT_DIR$/TeamLocker_Server/protobufs/Objects_pb2.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TeamLocker_Server/server.py" afterPath="$PROJECT_DIR$/TeamLocker_Server/server.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,8 +20,8 @@
       <file leaf-file-name="server.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TeamLocker_Server/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="975">
-              <caret line="149" column="100" lean-forward="false" selection-start-line="149" selection-start-column="100" selection-end-line="149" selection-end-column="100" />
+            <state relative-caret-position="720">
+              <caret line="158" column="0" lean-forward="true" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -54,7 +54,7 @@
       <file leaf-file-name="crypto.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TeamLocker_Server/crypto.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1025">
+            <state relative-caret-position="1155">
               <caret line="80" column="0" lean-forward="false" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
@@ -126,6 +126,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -148,7 +149,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -297,7 +297,14 @@
       <option name="project" value="LOCAL" />
       <updated>1506462276939</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Updated protobufs to contain new account objects">
+      <created>1506555930801</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1506555930801</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView">
@@ -312,7 +319,7 @@
   <component name="ToolWindowManager">
     <frame x="-1551" y="23" width="1554" height="1417" extended-state="0" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17063493" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17261904" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32796934" sideWeight="0.50477326" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1452345" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -339,7 +346,8 @@
     <MESSAGE value="Folder creation implemented" />
     <MESSAGE value="Added very basic logic to fetch all folders - Requires tweaks to support permissions" />
     <MESSAGE value="Updated folder creation and retrieval logic to only return folders that&#10;the user has at least read access to." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated folder creation and retrieval logic to only return folders that&#10;the user has at least read access to." />
+    <MESSAGE value="Updated protobufs to contain new account objects" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated protobufs to contain new account objects" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -731,7 +739,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TeamLocker_Server/crypto.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1025">
+        <state relative-caret-position="1155">
           <caret line="80" column="0" lean-forward="false" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
@@ -741,8 +749,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TeamLocker_Server/server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="975">
-          <caret line="149" column="100" lean-forward="false" selection-start-line="149" selection-start-column="100" selection-end-line="149" selection-end-column="100" />
+        <state relative-caret-position="720">
+          <caret line="158" column="0" lean-forward="true" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>

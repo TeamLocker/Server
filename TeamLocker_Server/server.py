@@ -8,6 +8,7 @@ from flask import Flask, abort, request
 import validation
 from protobufs.AddFolder_pb2 import AddFolderRequest, AddFolderResponse
 from protobufs.GetUser_pb2 import GetUserResponse
+from protobufs.GetUsers_pb2 import GetUsersResponse
 from protobufs.MessageComponents_pb2 import OperationResult
 from protobufs.Libsodium_pb2 import LibsodiumItem
 from protobufs.AddUser_pb2 import *
@@ -152,7 +153,32 @@ def get_folders():
     response = GetFolderResponse()
     response.result.success = True
     for permission in permissions:
-        response.folders.add(name=permission.folder.name)
+        response.folders.add(name=permission.folder.name, id=permission.folder.id)
+
+    return response.SerializeToString()
+
+
+@app.route("/folders/<folder_id>/users/", methods=["GET"])
+def get_folder_users(folder_id):
+    folder = models.Folder.query.get(folder_id)
+    if not folder:
+        response = GetUsersResponse()
+        response.result.success = False
+        response.result.message = "Folder not found"
+        return response.SerializeToString(), 404
+
+    permissions = models.Permission.query.filter_by(folder_id=folder_id, read=True)
+
+    response = GetUsersResponse()
+    response.result.success = True
+    for permission in permissions:
+        response.users.add(
+            id=permission.user.id,
+            username=permission.user.username,
+            full_name=permission.user.full_name,
+            public_key=permission.user.public_key,
+            is_admin=permission.user.is_admin
+        )
 
     return response.SerializeToString()
 
